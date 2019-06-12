@@ -15,6 +15,7 @@ func AddFunc(key string, spec string, cmd func(), panicHandle func(interface{}))
 	ts := &taskState{
 		Key:     key,
 		Cron:    c,
+		CronStr: spec,
 		Running: false,
 		Prev:    getInitTime(),
 
@@ -93,6 +94,15 @@ func IsWorking(key string) bool {
 		return false
 	}
 	return len(ch) == 0
+}
+
+func CronStr(key string) string {
+	tsi := taskList.GetObject(key)
+	if tsi == nil {
+		return ""
+	}
+	ts := tsi.(*taskState)
+	return ts.CronStr
 }
 
 /*

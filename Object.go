@@ -8,6 +8,7 @@ import (
 type taskState struct {
 	Key     string
 	Cron    *cron.Cron
+	CronStr string
 	Running bool
 	Prev    time.Time
 
