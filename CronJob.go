@@ -164,7 +164,7 @@ func getRunFunc(key string, cmd func(), panicHandle func(interface{})) func() {
 			}()
 			defer func() {
 				ch, ok := taskTicket[key]
-				if ok {
+				if ok && len(ch) == 0 {
 					ch <- struct{}{}
 				}
 			}()
