@@ -77,6 +77,11 @@ func Stop(key string) {
 	ts.Cron.Stop()
 }
 
+func HasTask(key string) bool {
+	t := taskList.GetObject(key)
+	return t != nil
+}
+
 //key没有对应task时，返回false
 func IsRunning(key string) bool {
 	tsi := taskList.GetObject(key)
