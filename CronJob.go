@@ -152,7 +152,8 @@ func getRunFunc(key string, cmd func(), panicHandle func(interface{})) func() {
 		case <-ch:
 			//panic处理
 			defer func() {
-				if err := recover(); err != nil {
+				err := recover()
+				if err != nil && panicHandle != nil {
 					panicHandle(err)
 				}
 			}()
@@ -172,7 +173,9 @@ func getRunFunc(key string, cmd func(), panicHandle func(interface{})) func() {
 				ts.Prev = time.Now()
 			}
 			//真实任务执行
-			cmd()
+			if cmd != nil {
+				cmd()
+			}
 		default:
 			//相同任务正在运行，跳过执行
 			return
