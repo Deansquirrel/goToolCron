@@ -7,6 +7,10 @@ import (
 )
 
 func AddFunc(key string, spec string, cmd func(), panicHandle func(interface{})) error {
+	if HasTask(key) {
+		DelFunc(key)
+	}
+
 	c := cron.New()
 	err := c.AddFunc(spec, getRunFunc(key, cmd, panicHandle))
 	if err != nil {
